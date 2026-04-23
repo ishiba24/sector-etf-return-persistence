@@ -51,25 +51,6 @@ python3 build_slide.py     # Quant_Final_Slide.pptx (uses notebook pipeline data
 python3 build_notebook.py  # quant_final_project.ipynb (requires network if CSV missing)
 ```
 
-## Publishing to GitHub (for Canvas)
-
-1. Create a new **public** (or private, per course policy) repository on GitHub, e.g. `quant-mentorship-final` or `qm-final-project-austin-renz`.
-2. From this folder:
-
-   ```bash
-   git remote add origin https://github.com/<YOUR_USERNAME>/<YOUR_REPO>.git
-   git branch -M main
-   git push -u origin main
-   ```
-
-3. Paste the repository URL (e.g. `https://github.com/<YOUR_USERNAME>/<YOUR_REPO>`) into the **QM Final Project** submission on Canvas.
-
-If you use the [GitHub CLI](https://cli.github.com/):
-
-```bash
-gh repo create <YOUR_REPO_NAME> --public --source=. --remote=origin --push
-```
-
 ## Research citations
 
 See **`REFERENCES.md`** for papers and sources cited for momentum, mean reversion, volatility regimes, and methodology.
