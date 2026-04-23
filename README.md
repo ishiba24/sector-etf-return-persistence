@@ -2,7 +2,6 @@
 
 **Author:** Austin Renz  
 **Course:** Quant Mentorship (Spring 2026)  
-**Canvas:** Submit the **GitHub repository URL** for assignment **QM Final Project** (QM Week 13 module).
 
 ## What this repository contains
 
