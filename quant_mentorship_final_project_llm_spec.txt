@@ -1,0 +1,646 @@
+QUANT MENTORSHIP FINAL PROJECT - FULL PROJECT CONTEXT AND EXECUTION SPEC
+========================================================================
+
+PURPOSE OF THIS DOCUMENT
+------------------------
+This document is a complete project guide and execution prompt for an LLM agent that will help complete the Quant Mentorship Final Project. It explains:
+
+1. What the project requires
+2. What project we are choosing
+3. Why we are choosing it
+4. What data to use
+5. What methods to use
+6. The exact order of work
+7. What the agent must produce at each stage
+8. How the agent should explain the code and analysis to the student
+
+The agent must work section by section. It should fully complete one section before moving to the next. It should not skip ahead. It should prioritize clarity, modular code, reproducibility, and strong explanation.
+
+SOURCE-BASED PROJECT REQUIREMENTS
+---------------------------------
+This final project is designed to demonstrate:
+- statistical proficiency
+- programming competency
+- the ability to clean, manipulate, analyze, and extract meaningful insights from financial time-series data
+
+The project mirrors common workflows in the Quant Sector and focuses more on analytical rigor and data-driven reasoning than on inventing a full trading strategy. The dataset must be chosen independently by the student from approved financial time-series sources and types. The required pipeline includes data cleaning and preprocessing, exploratory data analysis, statistical modeling or forecasting, and insight generation. Deliverables are a Jupyter notebook, a summary PDF report, and one presentation slide. The rubric heavily weights EDA, insights, modeling, and code quality. These requirements come from the final project PDF and mentorship slides. See: fileciteturn0file0L4-L13 fileciteturn0file0L16-L39 fileciteturn0file0L42-L88 fileciteturn0file0L90-L109 fileciteturn0file1L17-L70
+
+HIGH-LEVEL PROJECT CHOICE
+-------------------------
+Chosen project title:
+How do momentum and mean reversion behaviors vary across sector ETFs, return horizons, and volatility regimes?
+
+WHY THIS IS THE CHOSEN PROJECT
+------------------------------
+This idea is strong because:
+- it uses approved financial time-series data
+- it naturally supports multiple well-labeled visualizations
+- it allows for statistical analysis beyond surface-level chart interpretation
+- it is easier to explain than a more complex ML-only forecasting project
+- it creates room for meaningful insights instead of just running one model
+- it aligns closely with the rubric emphasis on EDA, interpretation, and clean modeling
+
+The point is not to prove one universal truth like "momentum always wins" or "mean reversion always wins." The point is to investigate whether different return behaviors appear:
+- across different sector ETFs
+- across different lookback/prediction horizons
+- across different volatility regimes
+
+This leads to a more nuanced, research-style conclusion.
+
+PROJECT QUESTION
+----------------
+Primary question:
+How do momentum and mean reversion behaviors differ across sector ETFs, time horizons, and volatility regimes?
+
+Secondary questions:
+1. Are short-horizon returns more mean-reverting while medium-horizon returns show more momentum?
+2. Do some sectors display stronger trend-following behavior than others?
+3. Does high market volatility weaken momentum or strengthen mean reversion?
+4. Are the observed patterns stable over time or only present in specific market conditions?
+
+PROJECT SCOPE
+-------------
+We are NOT building a full trading system.
+We are NOT trying to maximize PnL.
+We ARE doing a financial time-series research project with:
+- cleaning
+- visualization
+- statistical testing
+- basic predictive modeling
+- interpretation
+
+DATA TO USE
+-----------
+Main assets:
+- SPY
+- QQQ
+- XLK
+- XLE
+- XLF
+- XLU
+
+Why these:
+- SPY gives a broad market benchmark
+- QQQ gives a growth-heavy benchmark
+- XLK, XLE, XLF, XLU provide sector diversity:
+  - XLK = Technology
+  - XLE = Energy
+  - XLF = Financials
+  - XLU = Utilities
+
+Optional:
+- VIX or a volatility proxy for regime splitting
+If VIX is difficult to obtain cleanly, use rolling realized volatility from SPY returns instead.
+
+Suggested source:
+- Yahoo Finance via yfinance for ETF price data
+This fits the approved stock/ETF time-series data sources from the project description. fileciteturn0file0L20-L26 fileciteturn0file1L23-L31
+
+TIME PERIOD
+-----------
+Use a reasonably long historical window, such as:
+- 2015-01-01 to present
+or
+- 2010-01-01 to present if data quality is good and visuals remain readable
+
+A longer window helps capture multiple market regimes.
+
+CORE RESEARCH DESIGN
+--------------------
+The project should compare behavior across three dimensions:
+
+1. Asset dimension
+   Compare multiple ETFs
+
+2. Horizon dimension
+   Compare multiple lookback and forward windows such as:
+   - short horizon: 1-day lookback vs next 1-day return
+   - medium horizon: 5-day lookback vs next 5-day return
+   - longer horizon: 20-day lookback vs next 20-day return
+
+3. Regime dimension
+   Split the sample into high-volatility and low-volatility regimes
+   Suggested method:
+   - compute rolling 20-day volatility for SPY
+   - define high-vol regime as above median or above 75th percentile
+   - define low-vol regime as below median or below 25th percentile
+
+This gives the final project a strong structure.
+
+MANDATORY DELIVERABLES TO BUILD
+-------------------------------
+The final outputs must include:
+
+1. Jupyter Notebook (.ipynb)
+   Must contain:
+   - clean, modular code
+   - labeled sections
+   - data cleaning
+   - visualizations
+   - modeling
+   - interpretation
+   - inline comments in code
+
+2. Summary Analysis Report (PDF)
+   Must contain:
+   - dataset and source
+   - methods
+   - key findings
+   - at least 2 visuals
+   - reflection
+
+3. One polished slide
+   Must highlight:
+   - the most interesting result or visualization
+   - key finding
+   - clear takeaway
+
+These are explicitly required in the project documents. fileciteturn0file0L70-L88 fileciteturn0file1L72-L80
+
+IMPORTANT INSTRUCTIONS FOR THE LLM AGENT
+----------------------------------------
+The LLM agent must follow all of these rules:
+
+1. Work in phases. Finish one phase before moving to the next.
+2. After each phase, clearly summarize:
+   - what was done
+   - why it was done
+   - what was found
+   - what the next phase will do
+3. All code must include inline comments explaining what each block is doing.
+4. In addition to the code, the agent must explain each code section in plain English to the student so the student understands the logic.
+5. The agent should prefer readable code over overly advanced code.
+6. The agent should use modular functions where appropriate.
+7. The agent should avoid unnecessary complexity.
+8. The agent should justify every modeling choice.
+9. The agent should not treat a chart "looking interesting" as evidence by itself; it should support conclusions with statistics or modeling.
+10. The agent should keep the notebook presentation polished and organized.
+
+NOTE ON EXPLANATION STYLE
+-------------------------
+Every section of code should be followed by:
+- a plain-English explanation of what the code is doing
+- why we need it
+- what output we expect
+- how it connects to the research question
+
+The explanation should be student-friendly and should assume the student is trying to learn along the way, not just submit the project.
+
+PHASE-BY-PHASE EXECUTION PLAN
+=============================
+
+PHASE 1 - DEFINE THE RESEARCH QUESTION AND PROJECT PLAN
+-------------------------------------------------------
+GOAL:
+Create a clear and narrow project statement before writing analysis code.
+
+WHAT TO DO:
+1. Write the final project title.
+2. State the main research question.
+3. State 3-4 subquestions.
+4. Explain why this is a good quant project.
+5. Explain why sector ETFs are being used.
+6. Explain why comparing multiple horizons is important.
+7. Explain why volatility regimes are included.
+
+WHY WE ARE DOING THIS:
+A good project starts with a strong question. This keeps the notebook focused and makes the report stronger. Without a clear question, the analysis becomes a random collection of plots.
+
+REQUIRED OUTPUTS:
+- project title
+- main question
+- subquestions
+- short project rationale
+- proposed datasets and date range
+- plan for EDA, modeling, and insights
+
+STOP CONDITION:
+Do not move to Phase 2 until the project framing is complete and clearly written.
+
+PHASE 2 - SET UP THE NOTEBOOK AND IMPORT LIBRARIES
+--------------------------------------------------
+GOAL:
+Create a clean notebook structure and import the tools needed.
+
+WHAT TO DO:
+1. Create notebook section headers.
+2. Import libraries such as:
+   - pandas
+   - numpy
+   - matplotlib
+   - seaborn if desired for heatmaps only, but readable matplotlib is fine
+   - yfinance
+   - statsmodels
+   - sklearn
+3. Set plotting/display options.
+4. Write a short notebook introduction cell that explains the project.
+
+WHY WE ARE DOING THIS:
+A clean notebook structure improves readability, reproducibility, and grading under the code quality category.
+
+REQUIRED OUTPUTS:
+- import cell with inline comments
+- markdown/cell explanations for the notebook structure
+- brief explanation of why each main library is used
+
+STOP CONDITION:
+Do not download or analyze data yet.
+
+PHASE 3 - COLLECT DATA
+----------------------
+GOAL:
+Download and assemble the ETF price dataset.
+
+WHAT TO DO:
+1. Download adjusted close prices or close prices for:
+   - SPY, QQQ, XLK, XLE, XLF, XLU
+2. Use a consistent date range.
+3. Store the data in a clean dataframe.
+4. Inspect shape, date range, missing values, and column structure.
+5. Save a local copy if useful for reproducibility.
+
+WHY WE ARE DOING THIS:
+The project requires independently chosen, real-world financial time-series data. We need reliable ETF price history before calculating returns or doing any analysis.
+
+REQUIRED OUTPUTS:
+- data download code with inline comments
+- preview of the dataframe
+- printed summary of missing values and date coverage
+- plain-English explanation of the dataset
+
+IMPORTANT:
+If adjusted close is available, prefer adjusted close because it better reflects total price movement after splits/dividends.
+
+STOP CONDITION:
+Do not compute features until the raw data has been checked.
+
+PHASE 4 - DATA CLEANING AND PREPROCESSING
+-----------------------------------------
+GOAL:
+Prepare the dataset for analysis.
+
+WHAT TO DO:
+1. Check for missing dates or values.
+2. Decide how to handle missing values:
+   - drop rows with too many missing observations
+   - forward-fill carefully if justified
+3. Make sure all columns are numeric.
+4. Sort by date.
+5. Compute daily returns.
+6. Remove rows created by percent change calculations.
+7. Explain all cleaning choices.
+
+WHY WE ARE DOING THIS:
+The project explicitly requires handling missing values, structural issues, and preprocessing. Clean data is necessary for trustworthy results. fileciteturn0file0L42-L46 fileciteturn0file1L33-L40
+
+REQUIRED OUTPUTS:
+- cleaned price dataframe
+- returns dataframe
+- missing-value summary before and after cleaning
+- explanation of all cleaning decisions
+
+IMPORTANT:
+The student should understand exactly what changed between raw and cleaned data.
+
+STOP CONDITION:
+Do not build predictive features yet.
+
+PHASE 5 - FEATURE ENGINEERING
+-----------------------------
+GOAL:
+Create the variables needed to study momentum and mean reversion.
+
+WHAT TO DO:
+For each ETF:
+1. Compute lagged returns for multiple horizons:
+   - past 1-day return
+   - past 5-day return
+   - past 20-day return
+2. Compute future returns for matching horizons:
+   - next 1-day return
+   - next 5-day return
+   - next 20-day return
+3. Compute rolling volatility:
+   - use 20-day rolling standard deviation of daily returns
+4. Build a volatility regime indicator using SPY rolling volatility:
+   - high-vol regime
+   - low-vol regime
+5. Optionally compute moving-average gaps or additional context features
+
+WHY WE ARE DOING THIS:
+This phase turns raw prices into research variables that let us test whether past moves predict future continuation or reversal.
+
+REQUIRED OUTPUTS:
+- engineered feature dataframe for each ETF or one long-form combined dataframe
+- clear labeling of lookback variables and forward-return targets
+- volatility regime labels
+
+IMPORTANT:
+Avoid lookahead bias.
+The code must clearly explain:
+- what counts as a lagged feature
+- what counts as a future target
+- why the shifting direction matters
+
+STOP CONDITION:
+Do not analyze relationships until all features are correctly aligned.
+
+PHASE 6 - INITIAL EXPLORATORY DATA ANALYSIS
+-------------------------------------------
+GOAL:
+Understand the basic behavior of prices, returns, and volatility.
+
+WHAT TO DO:
+Create at least 3 strong visualizations, but ideally more. Good options include:
+1. Normalized price chart for all ETFs
+2. Rolling 20-day volatility chart
+3. Correlation heatmap of daily returns
+4. Distribution plots of returns
+5. Cumulative return comparisons
+6. Regime timeline chart showing high- vs low-vol periods
+
+WHY WE ARE DOING THIS:
+The project rubric places heavy emphasis on EDA and well-labeled visualizations. EDA helps us understand the structure of the data before formal modeling. fileciteturn0file0L48-L54 fileciteturn0file1L44-L52
+
+REQUIRED OUTPUTS:
+- at least 3 well-labeled visualizations with descriptive captions
+- explanation of the patterns in each visual
+- plain-English interpretation
+
+IMPORTANT:
+Every chart must answer some useful question.
+Do not include filler plots.
+
+STOP CONDITION:
+Do not conclude momentum or mean reversion yet from visuals alone.
+
+PHASE 7 - HORIZON-BASED MOMENTUM VS MEAN REVERSION ANALYSIS
+-----------------------------------------------------------
+GOAL:
+Study whether lagged returns relate positively or negatively to future returns at different horizons.
+
+WHAT TO DO:
+1. For each ETF and each horizon:
+   - compare past return over horizon h to future return over horizon h
+2. Create scatterplots or binned average plots
+3. Compute simple correlations between lagged and future returns
+4. Interpret sign:
+   - positive relation may suggest momentum
+   - negative relation may suggest mean reversion
+5. Compare whether the relationship changes between:
+   - 1-day
+   - 5-day
+   - 20-day horizons
+
+WHY WE ARE DOING THIS:
+This is the heart of the project question. It lets us test whether return continuation or reversal depends on horizon length.
+
+REQUIRED OUTPUTS:
+- per-horizon comparisons
+- summary tables of correlations by ETF and horizon
+- interpretation of where momentum or mean reversion appears stronger
+
+IMPORTANT:
+Use careful language:
+- "consistent with momentum"
+- "suggestive of mean reversion"
+Do not overclaim.
+
+STOP CONDITION:
+Do not move to regime splits until full-sample horizon analysis is complete.
+
+PHASE 8 - REGIME ANALYSIS
+-------------------------
+GOAL:
+Test whether the return behavior changes in high-volatility vs low-volatility markets.
+
+WHAT TO DO:
+1. Split the sample using the regime indicator
+2. Repeat the horizon analysis separately for:
+   - high-volatility periods
+   - low-volatility periods
+3. Compare signs and magnitudes of the relationships across regimes
+4. Highlight whether volatility changes the tendency toward momentum or mean reversion
+
+WHY WE ARE DOING THIS:
+Markets are not constant. Regime analysis adds depth and makes the conclusions more realistic and more aligned with the project's call for insight generation.
+
+REQUIRED OUTPUTS:
+- regime-specific charts or tables
+- comparison of behavior across regimes
+- plain-English explanation of why the results may differ
+
+IMPORTANT:
+This phase is one of the main ways the project becomes more advanced and less generic.
+
+STOP CONDITION:
+Do not run models until the descriptive regime comparisons are documented.
+
+PHASE 9 - STATISTICAL MODELING
+------------------------------
+GOAL:
+Use basic models to quantify the predictive relationships.
+
+WHAT TO DO:
+Build simple, readable models. Good options:
+1. Baseline model:
+   - predict future return as 0
+   or
+   - predict future return using historical mean
+2. Linear regression:
+   - target = future return
+   - predictor = lagged return
+3. Expanded regression:
+   - include lagged return
+   - include rolling volatility
+   - optionally include interaction with regime indicator
+4. Rolling regression or separate regressions by sector/regime if manageable
+
+WHY WE ARE DOING THIS:
+The project requires statistical modeling or forecasting and evaluation with appropriate metrics. We are using simple models because the goal is clarity and interpretation, not complexity for its own sake. fileciteturn0file0L56-L60 fileciteturn0file1L54-L58
+
+REQUIRED OUTPUTS:
+- baseline model
+- at least one regression-based model
+- code and explanation for train/test split
+
+IMPORTANT MODELING RULES:
+1. Use chronological train/test splits, not random shuffling.
+2. Explain why time-series data must preserve ordering.
+3. Evaluate with metrics such as:
+   - RMSE
+   - MAE
+   - R^2 if appropriate
+4. Interpret coefficient signs carefully.
+
+STOP CONDITION:
+Do not summarize final findings until model results are compared.
+
+PHASE 10 - SYNTHESIS OF FINDINGS
+--------------------------------
+GOAL:
+Turn the charts and model outputs into meaningful conclusions.
+
+WHAT TO DO:
+Summarize:
+1. Which sectors looked more momentum-driven?
+2. Which sectors looked more mean-reverting?
+3. Which horizons showed stronger continuation or reversal?
+4. How did the results change by volatility regime?
+5. Did the models support the visual/statistical patterns?
+
+WHY WE ARE DOING THIS:
+The project values insight and interpretation, not just code output. This is where the student shows depth of thinking. fileciteturn0file0L62-L66 fileciteturn0file1L60-L70
+
+REQUIRED OUTPUTS:
+- bullet summary of findings
+- nuanced interpretation
+- limitations and caveats
+
+IMPORTANT:
+Do not claim causation.
+Do not say the findings guarantee a profitable strategy.
+Keep the conclusion balanced and evidence-based.
+
+STOP CONDITION:
+Do not start the report until conclusions are clear.
+
+PHASE 11 - BUILD THE FINAL NOTEBOOK POLISH
+------------------------------------------
+GOAL:
+Make the notebook submission-ready.
+
+WHAT TO DO:
+1. Clean up variable names
+2. Make plots readable and labeled
+3. Ensure markdown explains each section
+4. Add short inline comments throughout code
+5. Remove dead code
+6. Ensure outputs flow logically
+
+WHY WE ARE DOING THIS:
+Code quality is part of the rubric, and the notebook is a major deliverable. fileciteturn0file0L72-L77 fileciteturn0file0L94-L98
+
+REQUIRED OUTPUTS:
+- final polished notebook structure
+- comments and explanations throughout
+
+STOP CONDITION:
+Notebook must be readable by both a grader and the student.
+
+PHASE 12 - WRITE THE PDF REPORT
+-------------------------------
+GOAL:
+Create the short written report.
+
+WHAT TO DO:
+Write a concise report with the following sections:
+1. Introduction / question
+2. Dataset and source
+3. Methods
+4. Key findings
+5. Visual highlights
+6. Reflection / limitations
+
+WHY WE ARE DOING THIS:
+The report is required and is meant to communicate technical findings to a non-technical or stakeholder audience. fileciteturn0file0L78-L82
+
+REQUIRED OUTPUTS:
+- concise 1-3 page report draft
+- at least 2 visuals
+- simple, professional language
+
+IMPORTANT:
+The report should not feel like notebook notes copied over. It should read like a summary of the study.
+
+STOP CONDITION:
+Do not build the slide until the written message is clear.
+
+PHASE 13 - BUILD THE FINAL PRESENTATION SLIDE
+---------------------------------------------
+GOAL:
+Create one polished slide showing the most interesting result.
+
+WHAT TO DO:
+1. Choose the single strongest visual or result
+2. Add a clear title
+3. Add 2-4 concise bullets
+4. Include one key takeaway sentence
+
+WHY WE ARE DOING THIS:
+The slide is required and should show the most interesting insight in a polished, presentation-ready format. fileciteturn0file0L83-L88 fileciteturn0file1L76-L80
+
+REQUIRED OUTPUTS:
+- one-slide content draft
+- suggested layout
+- headline insight
+
+STOP CONDITION:
+The project is complete only when notebook, report, and slide are all aligned.
+
+CODING STYLE REQUIREMENTS
+=========================
+The LLM agent must follow these coding rules:
+
+1. Use readable Python code.
+2. Use descriptive variable names.
+3. Organize repeated logic into functions.
+4. Add inline comments throughout the code so the student can follow along.
+5. Before or after each major code block, explain:
+   - what the code is doing
+   - why we need it
+   - how to interpret its output
+6. Keep comments helpful and human-sounding, not robotic.
+7. Do not dump giant unexplained code blocks.
+
+SUGGESTED NOTEBOOK STRUCTURE
+============================
+1. Title and project overview
+2. Imports and setup
+3. Data collection
+4. Data cleaning and preprocessing
+5. Feature engineering
+6. Exploratory data analysis
+7. Horizon analysis
+8. Regime analysis
+9. Statistical modeling
+10. Findings and interpretation
+11. Conclusion / limitations
+
+POTENTIAL VISUALS TO INCLUDE
+============================
+Strong candidates:
+- normalized ETF price chart
+- rolling volatility chart
+- return correlation heatmap
+- lagged return vs future return scatterplots
+- binned average future return by past return bucket
+- regime comparison bar chart
+- model performance comparison chart
+
+POTENTIAL LIMITATIONS TO DISCUSS
+================================
+The final project should acknowledge limitations such as:
+- ETF behavior changes over time
+- simple regressions may miss nonlinear effects
+- relationships may be economically small even if statistically visible
+- results may depend on chosen date range
+- findings do not necessarily imply tradable alpha after costs
+- regime definitions can affect conclusions
+
+FINAL EXPECTATION FOR THE AGENT
+===============================
+The end result should be a polished, educational, reproducible quant research project that shows:
+- careful data handling
+- strong time-series EDA
+- reasonable statistical modeling
+- thoughtful interpretation
+- clean code
+- clear student-facing explanation
+
+The agent should act like both:
+1. a quant research assistant
+and
+2. a tutor helping the student understand every step.
+
+END OF DOCUMENT

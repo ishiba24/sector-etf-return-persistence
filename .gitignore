@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+*.log
+
+# Large reference materials not required for grading (optional local copy)
+# Uncomment if you do not want the mentorship deck in the repo:
+# [Week 11]*.pptx
