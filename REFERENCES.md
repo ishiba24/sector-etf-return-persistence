@@ -28,9 +28,9 @@ The project design (lagged vs. forward returns across horizons, volatility regim
 8. **McKinney, W.** Data structures for statistical computing in Python. Proceedings of the 9th Python in Science Conference (2010).  
 9. **yfinance:** Ran Aroussi et al., https://github.com/ranaroussi/yfinance (Yahoo Finance market data access; used only for the **initial** download that produced `data/etf_prices.csv`).
 
-## Course materials
+## Course context
 
-10. **Georgia Tech Investments Committee, Quant Mentorship (Spring 2026).** Final project design document (*S26 Quant Mentorship Final Project*) and mentorship slides: project scope, deliverables, and rubric.
+10. **Georgia Tech Investments Committee, Quant Mentorship (Spring 2026).** Unpublished course materials (final project specification, deliverables, and grading rubric) used only to scope the assignment; not redistributed in this repository.
 
 ---
 

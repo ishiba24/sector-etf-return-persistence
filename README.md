@@ -15,6 +15,7 @@
 | `data/synthesis_table.csv` | Exported summary correlations (optional). |
 | `build_notebook.py` | Regenerates the notebook from source (optional). |
 | `build_report.py` / `build_slide.py` | Regenerate PDF and PPTX (optional). |
+| `data/README.md` | Notes on bundled CSV data. |
 | `REFERENCES.md` | Research and methodology citations. |
 
 ## Data (no API required to reproduce)
